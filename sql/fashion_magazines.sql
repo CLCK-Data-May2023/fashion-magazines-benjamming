@@ -1,9 +1,11 @@
-select customer_name, sum(total) from
-(select customer_name, price_per_month*subscription_length as total
- from subscriptions join
-(select customer_name, subscription_id
-from orders join customers
-on orders.customer_id = customers.customer_id
-where orders.order_status = "unpaid") unpaid
-on unpaid.subscription_id = subscriptions.subscription_id)
-group by customer_name
+select c.customer_name, sum(unpaid.due)
+from customers c join
+    (select o.customer_id,
+    s.price_per_month*s.subscription_length as due, 
+    o.order_status
+    from orders o join subscriptions s 
+    on o.subscription_id = s.subscription_id
+    where o.order_status = "unpaid"
+    and s.description="Fashion Magazine") unpaid
+on c.customer_id = unpaid.customer_id
+group by c.customer_name;
