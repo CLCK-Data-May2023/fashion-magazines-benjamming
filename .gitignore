@@ -1,6 +1,7 @@
 .vscode
 sql/solution.sql
-data/fashion_magazines.csv
+#data/fashion_magazines.csv
+# Commented out so tests will pass
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
