@@ -1,4 +1,5 @@
-select c.customer_name, sum(unpaid.due)
+select c.customer_name as "Customer", 
+printf("$%d.00", sum(unpaid.due)) as "Amount Due"
 from customers c join
     (select o.customer_id,
     s.price_per_month*s.subscription_length as due, 
